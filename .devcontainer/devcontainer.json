@@ -1,0 +1,18 @@
+{
+    "name": "Python",
+    "image": "python:3.11.2-buster",
+    "customizations": {
+        "vscode": {
+          "settings": {},
+          "extensions": ["streetsidesoftware.code-spell-checker"]
+        }
+      },
+      "portsAttributes": {
+        "9000": {
+          "label": "Hello Remote World",
+          "onAutoForward": "notify"
+        }
+      },
+      "forwardPorts": [9000],
+      "postCreateCommand": "pip3 install -r requirements.txt"
+}
