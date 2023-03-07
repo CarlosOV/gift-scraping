@@ -9,21 +9,29 @@ Start Flask
 
 ## Folder Structure
 
-app/
+```
+gift_recommender/
+├── __init__.py
 ├── application/
 │   ├── __init__.py
-│   ├── notification_use_cases.py
 │   ├── product_catalog_use_cases.py
-│   └── interfaces/
+│   ├── category_use_cases.py
+│   └── ports/
 │       ├── __init__.py
-│       ├── notification_port.py
-│       ├── product_catalog_port.py
-│       └── scraping_port.py
+│       ├── category_port.py
+│       └── product_catalog_port.py
 ├── domain/
 │   ├── __init__.py
+│   ├── category.py
 │   └── product.py
-└── infrastructure/
+├─── infrastructure/
+│   ├── __init__.py
+│   └── adapters/
+│       ├── __init__.py
+│       ├── category_adapter.py
+│       └── product_catalog_adapter.py
+└── api/
     ├── __init__.py
-    ├── email_notification_adapter.py
-    ├── product_catalog_adapter.py
-    └── scraping_adapter.py
+    ├── product_catalog_api.py
+    └── prompt_api.py
+```
