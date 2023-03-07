@@ -133,3 +133,6 @@ dmypy.json
 
 #Local examples
 examples
+
+#Visual Code
+.vscode

@@ -15,7 +15,9 @@ class CategoryAdapter(CategoryPort):
         categories_raw = ""
         for event in response_sse.events():
             if event.data != '[DONE]':
-                categories_raw += json.loads(event.data)['choices'][0]['text']
+                choice = json.loads(event.data)['choices'][0]['delta']
+                for text in choice.values():
+                    categories_raw += text
         categories_string = categories_raw.split("\n- ")
         categories = list(map(lambda s: Category(s), categories_string))
         return categories[1:]
