@@ -1,11 +1,13 @@
 # Gift Web Scraping
-Web Scraping of a web of gift recommendation
+Web Scraping of a gift recommendation website
 
 ## Instructions
 
-Run Dev Container
+### Run Dev Container
 
-Start Flask
+```
+python app.py
+```
 
 ## Folder Structure
 
