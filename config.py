@@ -5,6 +5,6 @@ settings = Dynaconf(
         'configs/settings.toml',
         'configs/.secrets.toml',
     ],
-    environments = True,
+    environments = False,
     load_dotenv = False
 )

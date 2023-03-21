@@ -6,8 +6,41 @@ Web Scraping of a gift recommendation website
 ### Run Dev Container
 
 ```
-python app.py
+python3 app.py
 ```
+
+## Deploy
+
+### Create venv
+
+```
+python3 -m venv venv
+```
+
+### Active venv
+
+```
+source venv/bin/activate
+```
+
+### Install dependencies
+
+```
+pip3 install -r requirements.txt
+```
+
+### Install gunicorn
+
+```
+pip3 install gunicorn
+```
+
+### Start server with gunicorn
+
+```
+gunicorn -w 4 -b 0.0.0.0:8000 gift_recommender.api.main:app
+```
+
 
 ## Folder Structure
 
