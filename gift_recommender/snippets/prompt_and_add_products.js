@@ -32,10 +32,21 @@ function getCategoryHtml(category){
     return `<div class="uagb-ifb-content"><div class="uagb-ifb-title-wrap"><h2 class="uagb-ifb-title">${category.description}</h2></div></div>`
 }
 
-var $productsSection= jQuery("#products-section");
+const LIMIT_CHARACTERS = 40;
+
+const ERROR_AT_LEAST_CHARACTERS = "To proceed, please ensure that your text contains at least 40 characters.";
+const ERROR_GENERIC = "Error, please try again." 
+
+var apiBasePath = "https://api.giftmind.site"
+var promptPath = "/prompt"
+var productsPath = "/products"
+
+var $productsSection = jQuery("#products-section");
 var $generateBtn = jQuery("#generate-ideas");
 var $loaderWrapper = jQuery(".loader-wrapper");
 var $promptWrapper = jQuery(".prompt-wrapper");
+var $promptField = jQuery("#prompt");
+var $promptError = jQuery("#prompt-error");
 var products = [
     {
     'name': "example name",
@@ -91,15 +102,92 @@ var category = {
     'description': "Example of Category"
 }
 
-if ($productsSection.size() > 0) {
-    $productsSection.append(getCategoryHtml(category));
-    $productsSection.append(getListProductsHtml(products));
-    $productsSection.append(getCategoryHtml(category));
-    $productsSection.append(getListProductsHtml(products));
+function showMainLoader(){
+    $loaderWrapper.removeClass("d-none").addClass("d-block");
+}
+function hideMainLoader(){
+    $loaderWrapper.removeClass("d-block").addClass("d-none");
+}
+
+function hidePromptField(){
+    $promptWrapper.removeClass("d-block").addClass("d-none");
+}
+
+function showPromptField(){
+    $promptWrapper.removeClass("d-none").addClass("d-block");
+}
+
+function showProductsSection(){
+    $productsSection.removeClass("d-none").addClass("d-block");
+}
+
+function hideProductsSection(){
+    $productsSection.removeClass("d-block").addClass("d-none");
+}
+
+function clearProductsSection(){
+    $productsSection.html("");
+}
+
+function clearPromptfield(){
+    $promptField.val("");
+}
+
+function getPromptFieldValue(){
+    return $promptField.val();
+}
+
+function showErrorPrompt(errorName){
+    $promptError.removeClass("d-none").addClass("d-block").html(errorName);
+}
+
+function hideErrorPrompt(){
+    $promptError.removeClass("d-block").addClass("d-none").html("");
+}
+
+function getRemoteCategories(data){
+    // return jQuery.post(apiBasePath+promptPath, data, "json");
+    return jQuery.ajax({
+        type: "POST",
+        url: apiBasePath+promptPath,
+        data: data,
+        contentType:"application/json; charset=utf-8",
+        dataType: "json"
+    });
 }
 
 $generateBtn.on("click", function(e){
-    $loaderWrapper.removeClass("d-none").addClass("d-block");
-    $promptWrapper.removeClass("d-block").addClass("d-none");
+    hideErrorPrompt();
+    var prompt = getPromptFieldValue();
+    if(prompt.length < LIMIT_CHARACTERS){
+        showErrorPrompt(ERROR_AT_LEAST_CHARACTERS);
+        e.preventDefault();
+        return;
+    }
+    showMainLoader();
+    clearProductsSection();
+    hideProductsSection();
+
+    getRemoteCategories({statement: prompt})
+        .done(function(data){
+            console.log('Success: ', { data } );
+        })
+        .fail(function(){
+            showErrorPrompt(ERROR_GENERIC);
+            hideMainLoader();
+            showPromptField();
+        })
+
     e.preventDefault();
 })
+
+
+
+
+
+// if ($productsSection.size() > 0) {
+//     $productsSection.append(getCategoryHtml(category));
+//     $productsSection.append(getListProductsHtml(products));
+//     $productsSection.append(getCategoryHtml(category));
+//     $productsSection.append(getListProductsHtml(products));
+// }
