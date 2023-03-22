@@ -136,3 +136,5 @@ examples
 
 #Visual Code
 .vscode
+
+gunicorn.service

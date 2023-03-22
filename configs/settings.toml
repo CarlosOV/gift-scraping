@@ -1,4 +1,5 @@
 scraping_web_url = ""
 category_path = ""
 product_catalog_path = ""
-amazon_basepath = ""
+amazon_base_path = "https://www.amazon.com/dp"
+amazon_tag = ""

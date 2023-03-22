@@ -20,7 +20,7 @@ class ProductCatalogAdapter(ProductCatalogPort):
             products.append(Product(
                 name=product['ItemInfo']['Title']['DisplayValue'],
                 asin=product['ASIN'],
-                detail_page=product['DetailPageURL'],
+                detail_page=f"{settings.amazon_base_path}/{product['ASIN']}?tag={settings.amazon_tag}",
                 image_url=product['Images']['Primary']['Large']['URL'],
                 display_amount=product['Offers']['Listings'][0]['Price']['DisplayAmount']
             ))
