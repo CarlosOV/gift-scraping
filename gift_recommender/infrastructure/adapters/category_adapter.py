@@ -12,9 +12,7 @@ class CategoryAdapter(CategoryPort):
     def get_categories_by_statement(self, statement: str) -> list[Category]:
         scraping_category_url = f'{settings.scraping_web_url}{settings.category_path}'
         http = urllib3.PoolManager()
-        
         response  = http.request('POST', f'{scraping_category_url}?description={statement.replace(" ", "%20")}', preload_content=False)
-        # response  = requests.post(f'{scraping_category_url}?description={statement.replace(" ", "%20")}', stream=True)
         response_sse = sseclient.SSEClient(response)
         categories_raw = ""
         for event in response_sse.events():
